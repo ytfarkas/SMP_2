@@ -1,30 +1,21 @@
 package TransactionManager;
 
-public enum Campus {
-    NEW_BRUNSWICK(0),
-    NEWARK(1),
-    CAMDEN(2);
-
-    private Campus campus; //campus code
-
-    Campus(int i){
-        if (i == 0){
-            this.campus = i;
-        } else if (i == 1) {
-            this.campus == NEWARK;
-
-        } else if (i == 2) {
-            this.campus == Campus.CAMDEN;
-
-        }else
-    }
-}
     public abstract class CollegeChecking extends Checking {
 
+        private Campus campus; //campus code
 
+        public CollegeChecking(Profile holder, double balance, int campus) {
+            super(holder, balance); /* calls the Checking constructor:
+                                     cannot simply do this.holder = holder and this.balance=balance
+                                    you must actually use the parent class's constructor bc those instance variables
+                                     are not directly associated with this class, the only instance variable in this class is campus
+                                     */
 
-        public CollegeChecking(Campus campus) {
-            this.campus = campus;
+            for(Campus c : Campus.values()){
+                if(c.campusNumber == campus){  //sets campus
+                    this.campus = c;
+                }
+            }
         }
 
         public Campus getCampus() {
@@ -33,7 +24,7 @@ public enum Campus {
 
         @Override
         public double monthlyInterest() {
-            return 0.0;
+            return 0.0;         // i dont think you use this to update the balance, you simply return what the interest is
         }
 
     }
