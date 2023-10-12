@@ -13,7 +13,7 @@ public class AccountDatabase {
 
     private int find(Account account) { //search for an account in the array
         for (int i = 0; i < numAcct; i++){
-            if (accounts[i].equals(account)){
+            if (accounts[i].compareTo(account) == 0){
                 return i; // return 1 or the place in the array?
             }
         }
@@ -32,7 +32,7 @@ public class AccountDatabase {
 
     public boolean contains(Account account){
         for (int i = 0; i < numAcct; i++){
-            if (account.equals(accounts[i])){
+            if (account.compareTo(accounts[i] == 0)){
                 return true; // Account is in the array
             }
         }
