@@ -4,8 +4,6 @@ public class AccountDatabase {
     private Account [] accounts; //list of various types of accounts
     private int numAcct; //number of accounts in the array
 
-    private int size; //can i use this here or it considered an instacne varrible?
-
     public AccountDatabase(){
         this.size = 4;
         this.accounts = new Account[size];
@@ -16,7 +14,7 @@ public class AccountDatabase {
     private int find(Account account) { //search for an account in the array
         for (int i = 0; i < numAcct; i++){
             if (accounts[i].equals(account)){
-                return 1; // Found
+                return i; // return 1 or the place in the array?
             }
         }
         return -1; //Not found
@@ -24,13 +22,11 @@ public class AccountDatabase {
 
 
     private void grow(){ //increase the capacity by 4
-        this.size = size + 4;
-        Account[] grow = new Account[size];
-
-        for (int i = 0; i < numAcct; i++){
-            grow[i] = accounts[i];
+       Account[] newAccounts = new Account[numAcct + 4];
+        for(int i = 0; i < newAccounts.length; i++){
+            newAccounts[i] = accounts[i];
         }
-        this.accounts = grow;
+        accounts = newAccounts;
     }
 
 
@@ -43,8 +39,29 @@ public class AccountDatabase {
         return false; //account is not in the array
 
     } //overload if necessary
-    public boolean open(Account account){} //add a new account
-    public boolean close(Account account){} //remove the given account
+    public boolean open(Account account){
+         if(numAcct == accounts.length){
+            grow();
+        }
+        accounts[numAcct] = account;
+        numActt++;
+
+        return true; // are we ever supposed to
+    } //add a new account
+    public boolean close(Account account){
+         Account[] newAccounts = new Account[accounts.length];
+        int count=0;
+        for(int i = 0; i < numAcct; i++){
+            if(account.compareTo(accounts[i]) == 0){
+                continue;
+            }
+            newAccounts[i] = accounts[count];
+            count++;
+        }
+        accounts = newAccounts;
+        numAcct--;
+        return true; // are we ever supposed to return false?
+    } //remove the given account
     public boolean withdraw(Account account){} //false if insufficient fund
     public void deposit(Account account){}
     public void printSorted(){
