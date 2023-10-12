@@ -17,6 +17,6 @@ Profile(String fname, String lname, Date dob){
                 return 0; //if profile equal
             }
         }
-    return 1;
+    return 1;   //are we supposed to return 1 if not equal?
     }
 }
