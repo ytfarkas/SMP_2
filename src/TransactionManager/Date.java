@@ -1,5 +1,6 @@
 package TransactionManager;
 
+import java.lang.invoke.CallSite;
 import java.util.Calendar;
 
 /**
@@ -61,13 +62,25 @@ public class Date implements Comparable<Date> { // add comparable method
         return true;
     }
 
+    public int getAge(int month, int day, int year){
+        Calendar today = Calendar.getInstance();
+        int currentMonth = today.get(Calendar.MONTH);
+        int currentDay = today.get(Calendar.DAY_OF_MONTH);
+        int currentYear = today.get(Calendar.YEAR);
+
+        int age = currentYear - year;
+        if (currentMonth < month || (currentMonth == month && currentDay < day)){
+            age--;
+        }
+        return age;
+    }
+
     /**
      * An extension to the isValid method, checks if the date is valid date as well as a leap year
      *
      * @return true if date is valid, false if invalid date or leap year
      */
     public boolean checkLeap() {
-        if (this.year > 1900) {
             switch (this.month) {
                 case 1:
                 case 3:
@@ -79,7 +92,7 @@ public class Date implements Comparable<Date> { // add comparable method
                     if (this.day >= 1 && this.day <= 31) {
                         break;
                     }
-                    System.out.println(this.month + "/" + this.day + "/" + this.year + ": Invalid Calendar Date!");
+                    System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + "not a valid calendar date!");
                     return false;
                 case 4:
                 case 6:
@@ -88,7 +101,7 @@ public class Date implements Comparable<Date> { // add comparable method
                     if (this.day >= 1 && this.day <= 30) {
                         break;
                     }
-                    System.out.println(this.month + "/" + this.day + "/" + this.year + ": Invalid Calendar Date!");
+                    System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + "not a valid calendar date!");
                     return false;
                 case 2:
                     if (this.year % QUADRENNIAL == 0) {
@@ -102,11 +115,10 @@ public class Date implements Comparable<Date> { // add comparable method
                         }
                     } else if (this.day <= 28 && this.day >= 1) {
                     } else {
-                        System.out.println(this.month + "/" + this.day + "/" + this.year + ": Invalid Calendar Date!");
+                        System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + "not a valid calendar date!");
                         return false;
                     }
             }
-        }
         return true;
     }
 
@@ -120,18 +132,18 @@ public class Date implements Comparable<Date> { // add comparable method
      */
     public boolean checkDate(int month, int day, int year) {
         if ((this.month > 12) || (this.day > 31) || this.month < 1 || this.day < 1) {
-            System.out.println(this.month + "/" + this.day + "/" + this.year + ": Invalid Calendar Date!");
+            System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
             return false;
         }
         Calendar calendar = Calendar.getInstance();
-        if (this.year < calendar.get(Calendar.YEAR) || (this.year == calendar.get(Calendar.YEAR) && this.month < calendar.get(Calendar.MONTH) + 1) ||
-                (this.year == calendar.get(Calendar.YEAR) && this.month < calendar.get(Calendar.MONTH) + 1 && this.day < calendar.get(Calendar.DAY_OF_MONTH))) {
-            System.out.println(this.month + "/" + this.day + "/" + this.year + ": Event date must be a future date!");
-            return false;
-        }
-        calendar.add(calendar.MONTH, 6);
-        if (year > calendar.get(Calendar.YEAR) || (year == calendar.get(Calendar.YEAR) && month > calendar.get(Calendar.MONTH) + 1) || (year == calendar.get(Calendar.YEAR) && month == calendar.get(Calendar.MONTH) + 1 && day > calendar.get(Calendar.DAY_OF_MONTH))) {
-            System.out.println(this.month + "/" + this.day + "/" + this.year + ": Event date must be within 6 months!");
+        int calMonth = calendar.get(Calendar.MONTH);
+        int calDay = calendar.get(Calendar.DAY_OF_MONTH) + 1;
+        int calYear = calendar.get(Calendar.YEAR);
+
+        if ((this.year == calYear && this.month == calMonth && this.day == calDay) ||
+                ((this.year > calYear) || (this.year == calYear && this.month > calMonth) ||
+                        (this.year == calYear && this.month == calMonth && this.day > calDay))) {
+            System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " cannot be today or a future day.");
             return false;
         }
         return true;
