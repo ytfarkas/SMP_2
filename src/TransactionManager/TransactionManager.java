@@ -33,10 +33,14 @@ public class TransactionManager {
                 }
                 break;
             case "D":
-                account.deposit(deposit(input));
+                if (deposit(input) != null){
+                    account.deposit(deposit(input));
+                }
                 break;
             case "W":
-                account.withdraw(withdraw(input));
+                if (withdraw(input) != null){
+                    account.withdraw(withdraw(input));
+                }
                 break;
             case "P":
                 account.printSorted();
@@ -78,10 +82,7 @@ public class TransactionManager {
         public Account openChecking(String input) {
             try {
                 String[] inputArray = input.trim().split("\\s+");
-                String fname = inputArray[1];
-                String lname = inputArray[2];
-                Date dob = new Date(inputArray[3]);
-                Profile profile = new Profile(fname, lname, dob);
+                Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
                 double bal = Double.parseDouble(inputArray[4]);
                 return new Checking(profile, bal);
             }
@@ -97,10 +98,7 @@ public class TransactionManager {
         public Account openCollegeChecking(String input) {
         try {
             String[] inputArray = input.trim().split("\\s+");
-            String fname = inputArray[1];
-            String lname = inputArray[2];
-            Date dob = new Date(inputArray[3]);
-            Profile profile = new Profile(fname, lname, dob);
+            Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
             double bal = Double.parseDouble(inputArray[4]);
             int campusCode = Integer.parseInt(inputArray[5]);
             return new CollegeChecking(profile, bal, campusCode);
@@ -117,10 +115,7 @@ public class TransactionManager {
     public Account openSavings(String input) {
         try {
             String[] inputArray = input.trim().split("\\s+");
-            String fname = inputArray[1];
-            String lname = inputArray[2];
-            Date dob = new Date(inputArray[3]);
-            Profile profile = new Profile(fname, lname, dob);
+            Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
             double bal = Double.parseDouble(inputArray[4]);
             boolean savingLoyalty = false;
             if (inputArray[5].equals("1")) {
@@ -141,10 +136,7 @@ public class TransactionManager {
     public Account openMoneyMarket(String input) {
         try {
             String[] inputArray = input.trim().split("\\s+");
-            String fname = inputArray[1];
-            String lname = inputArray[2];
-            Date dob = new Date(inputArray[3]);
-            Profile profile = new Profile(fname, lname, dob);
+            Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
             double bal = Double.parseDouble(inputArray[4]);
             return new MoneyMarket(profile, bal);
         }
@@ -162,12 +154,8 @@ public class TransactionManager {
     public Account closeAccount(String input){
         try {
             String[] inputArray = input.trim().split("\\s+");
-            String accountName = inputArray[0];
-            String fname = inputArray[1];
-            String lname = inputArray[2];
-            Date dob = new Date(inputArray[3]);
-            Profile profile = new Profile(fname, lname, dob);
-            switch (accountName) {
+            Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
+            switch (inputArray[0]) {
                 case ("C"):
                     return new Checking(profile);
                 case ("CC"):
@@ -188,48 +176,48 @@ public class TransactionManager {
     }
 
     public Account deposit(String input){
-        String[] inputArray = input.trim().split("\\s+");
-        String accountName = inputArray[0];
-        String fname = inputArray[1];
-        String lname = inputArray[2];
-        Date dob = new Date(inputArray[3]);
-        Profile profile = new Profile(fname, lname, dob);
-        double depo = Double.parseDouble((inputArray[4]));
-        switch(accountName) {
-            case ("C"):
-                return new Checking(profile, depo);
-            case ("CC"):
-                return new CollegeChecking(profile, depo);
-            case ("S"):
-                return new Savings(profile, depo);
-            case ("MM"):
-                return new MoneyMarket(profile, depo);
-            default:
-                System.out.println("Invalid Account"); //fix the invalid exception
-                break;
-        }
+       try {
+           String[] inputArray = input.trim().split("\\s+");
+           Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
+           double depo = Double.parseDouble((inputArray[4]));
+           switch (inputArray[0]) {
+               case ("C"):
+                   return new Checking(profile, depo);
+               case ("CC"):
+                   return new CollegeChecking(profile, depo);
+               case ("S"):
+                   return new Savings(profile, depo);
+               case ("MM"):
+                   return new MoneyMarket(profile, depo);
+               default:
+                   System.out.println("Invalid Account"); //fix the invalid exception
+                   break;
+           }
+       } catch(NumberFormatException a){
+           System.out.println("Not a valid amount.");
+       }
         return null;
     }
     public Account withdraw(String input){
-        String[] inputArray = input.trim().split("\\s+");
-        String accountName = inputArray[0];
-        String fname = inputArray[1];
-        String lname = inputArray[2];
-        Date dob = new Date(inputArray[3]);
-        Profile profile = new Profile(fname, lname, dob);
-        double withD = Double.parseDouble((inputArray[4]));
-        switch(accountName) {
-            case ("C"):
-                return new Checking(profile, withD);
-            case ("CC"):
-                return new CollegeChecking(profile, withD);
-            case ("S"):
-                return new Savings(profile, withD);
-            case ("MM"):
-                return new MoneyMarket(profile, withD);
-            default:
-                System.out.println("Invalid Account"); //fix the invalid exception
-                break;
+        try {
+            String[] inputArray = input.trim().split("\\s+");
+            Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
+            double withD = Double.parseDouble((inputArray[4]));
+            switch (inputArray[0]) {
+                case ("C"):
+                    return new Checking(profile, withD);
+                case ("CC"):
+                    return new CollegeChecking(profile, withD);
+                case ("S"):
+                    return new Savings(profile, withD);
+                case ("MM"):
+                    return new MoneyMarket(profile, withD);
+                default:
+                    System.out.println("Invalid Account"); //fix the invalid exception
+                    break;
+            }
+        } catch(NumberFormatException a){
+            System.out.println("Not a valid amount.");
         }
         return null;
     }

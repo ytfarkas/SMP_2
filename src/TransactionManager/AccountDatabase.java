@@ -96,7 +96,7 @@ public class AccountDatabase {
                 if(account.compareTo(accounts[i]) == 0){
                     continue;
                 }
-                newAccounts[i] = accounts[count];
+                newAccounts[count] = accounts[i];
                 count++;
             }
             accounts = newAccounts;
