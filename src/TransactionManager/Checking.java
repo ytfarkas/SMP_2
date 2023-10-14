@@ -1,6 +1,6 @@
 package TransactionManager;
 
-public abstract class Checking extends Account {
+public class Checking extends Account {
 
     public Checking(Profile profile, double balance){
         this.holder=profile;
