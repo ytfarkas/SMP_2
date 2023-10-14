@@ -58,7 +58,10 @@ public class MoneyMarket extends Savings {
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
         return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::" + loyal + "::withdrawal: " + withdrawal;
+    }
 
+    public void updateWithdrawal(){
+        withdrawal++;
     }
 
 }
