@@ -120,6 +120,12 @@ public class AccountDatabase {
 
         if(isInDatabase(account) && accounts[find(account)].balance > account.balance){
             accounts[find(account)].balance -= account.balance;
+            if(accounts[find(account)].printType().equals("MM")){
+                MoneyMarket update = (MoneyMarket) accounts[find(account)];
+                update.updateWithdrawal();
+                accounts[find(account)] = update;
+            }
+
             System.out.println(account.holder.toString() + account.printType() + "Withdraw - balance updated.");
             return true;
         }
