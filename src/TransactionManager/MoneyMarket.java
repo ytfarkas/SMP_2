@@ -7,6 +7,12 @@ public class MoneyMarket extends Savings {
         super(profile, balance, loyalty); //super explanation in collegeChecking
         this.withdrawal=withdrawal;
     }
+    public MoneyMarket(Profile profile){
+        super(profile);
+    }
+    public MoneyMarket(Profile profile, double depo){
+        super(profile, depo);
+    }
     @Override
     public double monthlyInterest(){
         if (isLoyal){

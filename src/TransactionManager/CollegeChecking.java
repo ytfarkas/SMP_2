@@ -17,6 +17,12 @@ package TransactionManager;
                 }
             }
         }
+        public CollegeChecking(Profile profile){
+            super(profile);
+        }
+        public CollegeChecking(Profile profile, double depo){
+            super(profile, depo);
+        }
 
         public Campus getCampus() {
             return campus;

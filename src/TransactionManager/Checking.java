@@ -7,6 +7,10 @@ public class Checking extends Account {
         this.balance=balance;
     }
 
+    public Checking (Profile profile){
+        this.holder = profile;
+    }
+
 
     @Override
     public double monthlyInterest() {
