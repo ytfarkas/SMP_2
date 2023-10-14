@@ -8,4 +8,9 @@ public abstract class MoneyMarket extends Savings {
         this.withdrawal=withdrawal;
     }
 
+    @Override
+    public String printType(){
+        return "(MM)";
+    }
+
 }

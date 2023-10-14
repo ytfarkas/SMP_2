@@ -50,6 +50,11 @@ public class Date implements Comparable<Date> { // add comparable method
         this.year = Integer.parseInt(splitD[2]);
     }
 
+    @Override
+    public String toString(){
+        return month + "/" + day + "/" + year;
+    }
+
     /**
      * Checks if date is a valid calendar date
      *
@@ -62,14 +67,14 @@ public class Date implements Comparable<Date> { // add comparable method
         return true;
     }
 
-    public int getAge(int month, int day, int year){
+    public int getAge(){
         Calendar today = Calendar.getInstance();
         int currentMonth = today.get(Calendar.MONTH);
         int currentDay = today.get(Calendar.DAY_OF_MONTH);
         int currentYear = today.get(Calendar.YEAR);
 
-        int age = currentYear - year;
-        if (currentMonth < month || (currentMonth == month && currentDay < day)){
+        int age = currentYear - this.year;
+        if (currentMonth < this.month || (currentMonth == this.month && currentDay < this.day)){
             age--;
         }
         return age;
@@ -168,6 +173,7 @@ public class Date implements Comparable<Date> { // add comparable method
      * @return year
      */
     public int getYear() {
+
         return year;
     }
 
@@ -177,6 +183,7 @@ public class Date implements Comparable<Date> { // add comparable method
      * @return month
      */
     public int getMonth() {
+
         return month;
     }
 
@@ -186,6 +193,7 @@ public class Date implements Comparable<Date> { // add comparable method
      * @return day
      */
     public int getDay() {
+
         return day;
     }
 

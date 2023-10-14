@@ -19,12 +19,18 @@ package TransactionManager;
         }
 
         public Campus getCampus() {
+
             return campus;
         }
 
         @Override
         public double monthlyInterest() {
             return 0.0;         // i dont think you use this to update the balance, you simply return what the interest is
+        }
+
+        @Override
+        public String printType(){
+            return "(CC)";
         }
 
     }

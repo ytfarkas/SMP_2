@@ -19,4 +19,20 @@ Profile(String fname, String lname, Date dob){
         }
     return 1;
     }
+
+    @Override
+    public String toString(){
+        return fname + " " + lname + " " + dob.toString();
+    }
+
+    public Date getDOB(){
+        return dob;
+    }
+    public String getFname(){
+        return fname;
+    }
+
+    public String getLname(){
+        return lname;
+    }
 }
