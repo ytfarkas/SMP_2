@@ -74,6 +74,9 @@ public class AccountDatabase {
             System.out.println(account.holder.toString() + account.printType() + " is already in the database.");
             return false;
         }
+        if(!account.holder.getDOB().isValid()) {
+            return false;
+        }
         if(account.holder.getDOB().getAge() < 16){
             System.out.println("DOB invalid: " + account.holder.getDOB().toString() +  " under 16.");
             return false;
@@ -86,7 +89,7 @@ public class AccountDatabase {
     }
 
     public boolean close(Account account){
-        if(isInDatabase(account)){
+        if(account.holder.getDOB().isValid() && isInDatabase(account)){
             Account[] newAccounts = new Account[accounts.length];
             int count=0;
             for(int i = 0; i < numAcct; i++){
@@ -113,8 +116,13 @@ public class AccountDatabase {
     }
     public boolean withdraw(Account account){
         //need check for if amount entered is not a number in transactionmanager i think
+
         if(account.balance <= 0){
             System.out.println("Withdraw - amount cannot be 0 or negative.");
+            return false;
+        }
+
+        if(!account.holder.getDOB().isValid()){
             return false;
         }
 
@@ -136,7 +144,7 @@ public class AccountDatabase {
         //need check for if amount entered is not a number in transactionmanager i think
         if(account.balance <= 0){
             System.out.println("Deposit- amount cannot be 0 or negative.");
-        }else if(isInDatabase(account)){
+        }else if(account.holder.getDOB().isValid() && isInDatabase(account)){
             accounts[find(account)].balance -= account.balance;
             System.out.println(account.holder.toString() + account.printType() + "Deposit - balance updated.");
         }
