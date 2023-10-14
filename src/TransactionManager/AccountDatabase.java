@@ -22,7 +22,7 @@ public class AccountDatabase {
 
     private void grow(){ //increase the capacity by 4
        Account[] newAccounts = new Account[numAcct + 4];
-        for(int i = 0; i < newAccounts.length; i++){
+        for(int i = 0; i < numAcct; i++){
             newAccounts[i] = accounts[i];
         }
         accounts = newAccounts;
@@ -47,12 +47,30 @@ public class AccountDatabase {
         return false; //account is not in the array
     }
     public boolean open(Account account){
+        if(validOpen(account)) {
+            if (numAcct == accounts.length) {
+                grow();
+            }
+            accounts[numAcct] = account;
+            numAcct++;
+            System.out.println(account.holder.toString() + account.printType() + " opened.");
+            return true;
+        }
+        return false;
+    } //add a new account
 
+    /**
+     * Checks if the open command is valid and prints the correct error if not
+     *
+     * @param account
+     * @return true if valid, false if not
+     */
+    public boolean validOpen(Account account){
         if(contains(account)){
             System.out.println(account.holder.toString() + account.printType() + " is already in the database.");
             return false;
         }
-        if((account.printType().equals("(CC)") || account.printType().equals("(C)")) && hasChecking(account) ){
+        if((account.printType().equals("(CC)") || account.printType().equals("(C)")) && hasChecking(account)){
             System.out.println(account.holder.toString() + account.printType() + " is already in the database.");
             return false;
         }
@@ -60,14 +78,12 @@ public class AccountDatabase {
             System.out.println("DOB invalid: " + account.holder.getDOB().toString() +  " under 16.");
             return false;
         }
-         if(numAcct == accounts.length){
-            grow();
+        if(account.balance <= 0){
+            System.out.println("Initial deposit cannot be 0 or negative.");
+            return false;
         }
-        accounts[numAcct] = account;
-        numAcct++;
-        System.out.println(account.holder.toString() + account.printType() + " opened.");
-        return true; // are we ever supposed to
-    } //add a new account
+        return true;
+    }
 
     public boolean close(Account account){
         if(isInDatabase(account)){
@@ -124,12 +140,13 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
         }
         else{
+            System.out.println("*Accounts sorted by account type and profile.");
             for(int i = 1; i < numAcct; i++){
                 for(int j = 0; j < numAcct-1; j++){
                     if((accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) > 0 && accounts[j].printType().compareTo(accounts[j+1].printType()) > 0) ||
                         (accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) == 0 &&
                          accounts[j].holder.getFname().compareTo(accounts[j+1].holder.getFname()) > 0 &&  //checking the last and first name when the accounts are different
-                         accounts[j].printType().compareTo(accounts[j+1].printType()) > 0 )   ||
+                         accounts[j].printType().compareTo(accounts[j+1].printType()) > 0 )  ||
                         (accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) > 0 && accounts[j].printType().compareTo(accounts[j+1].printType()) == 0)   ||
                         (accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) == 0 &&
                          accounts[j].holder.getFname().compareTo(accounts[j+1].holder.getFname()) > 0 &&  //checking the last and first name when the accounts are the same
@@ -141,6 +158,10 @@ public class AccountDatabase {
                     }
                 }
             }
+            for(int i = 0; i < numAcct; i++){
+                System.out.println(accounts[i].toString());
+            }
+            System.out.println("*end of list.");
         }
     } //sort by account type and profile
 
@@ -148,10 +169,24 @@ public class AccountDatabase {
         if (numAcct == 0){
             System.out.println("Account Database is empty!");
         }
+        else{
+            System.out.println("*list of accounts with fee and monthly interest");
+            for(int i=0; i < numAcct; i++){
+                System.out.println(accounts[i].printWithFeesAndInterest());
+            }
+            System.out.println("*end of list.");
+        }
     } //calculate interests/fees
     public void printUpdatedBalances(){
         if (numAcct == 0){
             System.out.println("Account Database is empty!");
+        }
+        else{
+            System.out.println("*list of accounts with fees and interests applied");
+            for(int i=0; i < numAcct; i++){
+                System.out.println(accounts[i].printWithFeesAndInterest());
+            }
+            System.out.println("*end of list.");
         }
     } //apply the interests/fees
 }

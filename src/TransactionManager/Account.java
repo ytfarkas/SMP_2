@@ -14,15 +14,21 @@ public abstract class Account implements Comparable<Account> {
     protected Profile holder;
     protected double balance;
 
+    @Override
      public int compareTo(Account account){
         if(this.holder.compareTo(account.holder) ==0 && account.printType().equals(this.printType()) ){ //do you need to check balance
             return 0;
         }
         return 1;  //do we return 1 or -1 based on the balance?
     }
+
     
     public abstract double monthlyInterest();
     public abstract double monthlyFee();
 
     public abstract String printType();
+
+    public abstract String printWithFeesAndInterest();
+
+    public abstract String printUpdatedBalance();
 }
