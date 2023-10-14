@@ -23,6 +23,11 @@ public abstract class Checking extends Account {
         }
     }
 
+    @Override
+    public String printType(){
+        return "(C)";
+    }
+
 
 
 }

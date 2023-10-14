@@ -9,4 +9,9 @@ public abstract class Savings extends Account {
         this.balance=balance;
         this.isLoyal=loyalty;
     }
+
+    @Override
+    public String printType(){
+        return "(S)";
+    }
 }
