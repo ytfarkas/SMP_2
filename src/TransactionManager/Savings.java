@@ -9,6 +9,13 @@ public class Savings extends Account {
         this.balance=balance;
         this.isLoyal=loyalty;
     }
+    public Savings(Profile profile){
+        this.holder = profile;
+    }
+    public Savings (Profile profile, double depo){
+        this.holder = profile;
+        this.balance = depo;
+    }
 
     @Override
     public double monthlyInterest(){
