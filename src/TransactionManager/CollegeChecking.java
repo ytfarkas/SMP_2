@@ -19,19 +19,42 @@ package TransactionManager;
         }
 
         public Campus getCampus() {
-
             return campus;
         }
 
         @Override
         public double monthlyInterest() {
-            return 0.0;         // i dont think you use this to update the balance, you simply return what the interest is
+            return (balance * 0.01) / 12;
+        }
+        @Override
+        public double monthlyFee() {
+            return 0.0;
         }
 
         @Override
         public String printType(){
             return "(CC)";
         }
+
+        @Override
+        public String toString(){
+            return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::" + this.campus;
+        }
+
+        @Override
+        public String printWithFeesAndInterest(){
+            return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::" + this.campus + "::fee $"+
+                    String.format("%.2f", this.monthlyFee())  + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
+        }
+
+        @Override
+        public String printUpdatedBalance(){
+            balance += this.monthlyInterest();
+            balance -= this.monthlyFee();
+            return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::" + this.campus;
+        }
+
+
 
     }
 
