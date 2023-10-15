@@ -40,18 +40,18 @@ public class MoneyMarket extends Savings {
     public String toString(){
         String loyal = "";
         if(isLoyal){
-            loyal = "::is loyal::";
+            loyal = "is loyal::";
         }
-        return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + this.balance + "::" + loyal + "::withdrawal: " + withdrawal;
+        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + this.balance + "::" + loyal + "withdrawal: " + withdrawal;
     }
 
     @Override
     public String printWithFeesAndInterest(){
         String loyal = "";
         if(isLoyal){
-            loyal = "::is loyal::";
+            loyal = "is loyal::";
         }
-        return this.getClass() + "::Savings::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::" + loyal + "::withdrawal: " + withdrawal +
+        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::" + loyal + "withdrawal: " + withdrawal +
                 "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
     }
 
@@ -59,11 +59,11 @@ public class MoneyMarket extends Savings {
     public String printUpdatedBalance(){
         String loyal = "";
         if(isLoyal){
-            loyal = "::is loyal::";
+            loyal = "is loyal::";
         }
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
-        return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::" + loyal + "::withdrawal: " + withdrawal;
+        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::" + loyal + "withdrawal: " + withdrawal;
     }
 
     public void updateWithdrawal(){

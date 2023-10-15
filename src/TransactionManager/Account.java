@@ -16,7 +16,7 @@ public abstract class Account implements Comparable<Account> {
 
     @Override
      public int compareTo(Account account){
-        if(this.holder.compareTo(account.holder) ==0 && account.printType().equals(this.printType()) ){
+        if(this.holder.compareTo(account.holder) == 0 && account.printType().equals(this.printType()) ){
             return 0;
         }
         return 1;  //do we return 1 or -1 based on the balance?

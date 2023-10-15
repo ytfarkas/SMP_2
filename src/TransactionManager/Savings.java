@@ -43,12 +43,12 @@ public class Savings extends Account {
         if(isLoyal){
             loyal = "::is loyal";
         }
-        return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + this.balance + loyal;
+        return "Savings::" + this.holder.toString() + "::Balance $" + this.balance + loyal;
     }
 
     @Override
     public String printWithFeesAndInterest(){
-        return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::fee $"+
+        return "Savings::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::fee $"+
                 String.format("%.2f", this.monthlyFee())  + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
     }
 
@@ -56,11 +56,11 @@ public class Savings extends Account {
     public String printUpdatedBalance(){
         String loyal = "";
         if(isLoyal){
-            loyal = "::is loyal::";
+            loyal = "::is loyal";
         }
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
-        return this.getClass() + "::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::" + loyal;
+        return "Savings::"+ this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "" + loyal;
 
     }
 }

@@ -85,6 +85,10 @@ public class AccountDatabase {
             System.out.println("Initial deposit cannot be 0 or negative.");
             return false;
         }
+        if((account.printType().equals("(CC)") && account.holder.getDOB().getAge() >= 24)){
+            System.out.println("DOB invalid:" + account.holder.getDOB().toString() + " over 24.");
+            return false;
+        }
         return true;
     }
 
@@ -155,29 +159,132 @@ public class AccountDatabase {
         }
         else{
             System.out.println("*Accounts sorted by account type and profile.");
-            for(int i = 1; i < numAcct; i++){
-                for(int j = 0; j < numAcct-1; j++){
-                    if((accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) > 0 && accounts[j].printType().compareTo(accounts[j+1].printType()) > 0) ||
-                        (accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) == 0 &&
-                         accounts[j].holder.getFname().compareTo(accounts[j+1].holder.getFname()) > 0 &&  //checking the last and first name when the accounts are different
-                         accounts[j].printType().compareTo(accounts[j+1].printType()) > 0 )  ||
-                        (accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) > 0 && accounts[j].printType().compareTo(accounts[j+1].printType()) == 0)   ||
-                        (accounts[j].holder.getLname().compareTo(accounts[j+1].holder.getLname()) == 0 &&
-                         accounts[j].holder.getFname().compareTo(accounts[j+1].holder.getFname()) > 0 &&  //checking the last and first name when the accounts are the same
-                         accounts[j].printType().compareTo(accounts[j+1].printType()) == 0)
-                    ){
-                        Account temp = accounts[j];
-                        accounts[j] = accounts[j+1];
-                        accounts[j+1] = temp;
-                    }
-                }
+            Account[] sortedChecking = sortChecking();
+            Account[] sortedCollege = sortCollege();
+            Account[] sortedMoneyMarket = sortMoneyMarket();
+            Account[] sortedSavings = sortSavings();
+            for(int i = 0; i < sortedChecking.length; i++){
+                System.out.println(sortedChecking[i].toString());
             }
-            for(int i = 0; i < numAcct; i++){
-                System.out.println(accounts[i].toString());
+            for(int i = 0; i < sortedCollege.length; i++){
+                System.out.println(sortedCollege[i].toString());
             }
+            for(int i = 0; i < sortedMoneyMarket.length; i++){
+                System.out.println(sortedMoneyMarket[i].toString());
+            }
+            for(int i = 0; i < sortedSavings.length; i++){
+                System.out.println(sortedSavings[i].toString());
+            }
+
             System.out.println("*end of list.");
         }
     } //sort by account type and profile
+
+    public Account[] sortChecking(){
+        Account[] newAccounts = new Account[numAcct];
+        int count = 0;
+        for(int i = 0; i < numAcct; i++){
+            if(accounts[i].printType().equals("(C)")){
+                newAccounts[count] = accounts[i];
+                count++;
+            }
+        }
+        for(int i = 0; i < count-1; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                if((newAccounts[j].holder.compareTo(newAccounts[j + 1].holder) > 0))
+                {
+                    Account temp = newAccounts[j];
+                    newAccounts[j] = newAccounts[j + 1];
+                    newAccounts[j + 1] = temp;
+                }
+            }
+        }
+        Account[] noNullAccounts = new Account[count];
+        for(int i = 0; i < count; i++){
+                noNullAccounts[i] = newAccounts[i];
+        }
+
+        return noNullAccounts;
+    }
+
+    public Account[] sortCollege(){
+        Account[] newAccounts = new Account[numAcct];
+        int count = 0;
+        for(int i = 0; i < numAcct; i++){
+            if(accounts[i].printType().equals("(CC)")){
+                newAccounts[count] = accounts[i];
+                count++;
+            }
+        }
+        for(int i = 0; i < count-1; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                if((newAccounts[j].holder.compareTo(newAccounts[j + 1].holder) > 0))
+                {
+                    Account temp = newAccounts[j];
+                    newAccounts[j] = newAccounts[j + 1];
+                    newAccounts[j + 1] = temp;
+                }
+            }
+        }
+        Account[] noNullAccounts = new Account[count];
+        for(int i = 0; i < count; i++){
+            noNullAccounts[i] = newAccounts[i];
+        }
+
+        return noNullAccounts;
+    }
+
+    public Account[] sortMoneyMarket(){
+        Account[] newAccounts = new Account[numAcct];
+        int count = 0;
+        for(int i = 0; i < numAcct; i++){
+            if(accounts[i].printType().equals("(MM)")){
+                newAccounts[count] = accounts[i];
+                count++;
+            }
+        }
+        for(int i = 0; i < count-1; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                if((newAccounts[j].holder.compareTo(newAccounts[j + 1].holder) > 0))
+                {
+                    Account temp = newAccounts[j];
+                    newAccounts[j] = newAccounts[j + 1];
+                    newAccounts[j + 1] = temp;
+                }
+            }
+        }
+        Account[] noNullAccounts = new Account[count];
+        for(int i = 0; i < count; i++){
+            noNullAccounts[i] = newAccounts[i];
+        }
+        return noNullAccounts;
+    }
+
+    public Account[] sortSavings(){
+        Account[] newAccounts = new Account[numAcct];
+        int count = 0;
+        for(int i = 0; i < numAcct; i++){
+            if(accounts[i].printType().equals("(S)")){
+                newAccounts[count] = accounts[i];
+                count++;
+            }
+        }
+        for(int i = 0; i < count-1; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                if((newAccounts[j].holder.compareTo(newAccounts[j + 1].holder) > 0))
+                {
+                    Account temp = newAccounts[j];
+                    newAccounts[j] = newAccounts[j + 1];
+                    newAccounts[j + 1] = temp;
+                }
+            }
+        }
+        Account[] noNullAccounts = new Account[count];
+        for(int i = 0; i < count; i++){
+            noNullAccounts[i] = newAccounts[i];
+        }
+        return noNullAccounts;
+    }
 
     public void printFeesAndInterests(){
         if (numAcct == 0){
@@ -198,7 +305,7 @@ public class AccountDatabase {
         else{
             System.out.println("*list of accounts with fees and interests applied");
             for(int i=0; i < numAcct; i++){
-                System.out.println(accounts[i].printWithFeesAndInterest());
+                System.out.println(accounts[i].printUpdatedBalance());
             }
             System.out.println("*end of list.");
         }
