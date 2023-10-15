@@ -34,7 +34,7 @@ public class Checking extends Account {
 
     @Override
     public String toString(){
-        return "Checking::" + this.holder.toString() + "::Balance $" + this.balance;
+        return "Checking::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance);
     }
 
     @Override

@@ -97,7 +97,7 @@ public class Date implements Comparable<Date> { // add comparable method
                     if (this.day >= 1 && this.day <= 31) {
                         break;
                     }
-                    System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + "not a valid calendar date!");
+                    System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
                     return false;
                 case 4:
                 case 6:
@@ -106,7 +106,7 @@ public class Date implements Comparable<Date> { // add comparable method
                     if (this.day >= 1 && this.day <= 30) {
                         break;
                     }
-                    System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + "not a valid calendar date!");
+                    System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
                     return false;
                 case 2:
                     if (this.year % QUADRENNIAL == 0) {
@@ -120,7 +120,7 @@ public class Date implements Comparable<Date> { // add comparable method
                         }
                     } else if (this.day <= 28 && this.day >= 1) {
                     } else {
-                        System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + "not a valid calendar date!");
+                        System.out.println("DOB Invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
                         return false;
                     }
             }

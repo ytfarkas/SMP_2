@@ -39,28 +39,33 @@ public class Savings extends Account {
 
     @Override
     public String toString(){
-        String loyal = "";
         if(isLoyal){
-            loyal = "::is loyal";
+            return "Savings::" + this.holder.toString() + "::Balance $"
+                    + String.format("%.2f", this.balance) + "::is loyal";
         }
-        return "Savings::" + this.holder.toString() + "::Balance $" + this.balance + loyal;
+        return "Savings::" + this.holder.toString() + "::Balance $"
+                + String.format("%.2f", this.balance);
+
     }
 
     @Override
     public String printWithFeesAndInterest(){
-        return "Savings::" + this.holder.toString() + ":: Balance $" + String.format("%.2f", this.balance) + "::fee $"+
-                String.format("%.2f", this.monthlyFee())  + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
+        if(isLoyal){
+            return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance)
+                    + "::is loyal" +  "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $"
+                    + String.format("%.2f", this.monthlyInterest());
+        }
+        return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance)
+                + "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
     }
 
     @Override
     public String printUpdatedBalance(){
-        String loyal = "";
-        if(isLoyal){
-            loyal = "::is loyal";
-        }
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
-        return "Savings::"+ this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "" + loyal;
-
+        if(isLoyal){
+            return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::is loyal";
+        }
+        return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance);
     }
 }
