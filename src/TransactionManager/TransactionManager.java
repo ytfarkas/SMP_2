@@ -138,7 +138,7 @@ public class TransactionManager {
             String[] inputArray = input.trim().split("\\s+");
             Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
             double bal = Double.parseDouble(inputArray[4]);
-            return new MoneyMarket(profile, bal);
+            return new MoneyMarket(profile, bal, true);
         }
         catch(ArrayIndexOutOfBoundsException e){
             System.out.println("Missing data for opening an account.");

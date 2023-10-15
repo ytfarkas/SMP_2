@@ -66,9 +66,22 @@ public class AccountDatabase {
      * @return true if valid, false if not
      */
     public boolean validOpen(Account account){
+        if(account.balance <= 0){
+            System.out.println("Initial deposit cannot be 0 or negative.");
+            return false;
+        }
         if(contains(account)){
             System.out.println(account.holder.toString() + account.printType() + " is already in the database.");
             return false;
+        }
+        if(account.printType().equals("(CC)") ) {
+            CollegeChecking checking = (CollegeChecking) account;
+            try {
+                boolean checkCampCode = !checking.getCampus().isValid();
+            } catch (NullPointerException e){
+                System.out.println("Invalid campus code.");
+                return false;
+            }
         }
         if((account.printType().equals("(CC)") || account.printType().equals("(C)")) && hasChecking(account)){
             System.out.println(account.holder.toString() + account.printType() + " is already in the database.");
@@ -81,12 +94,12 @@ public class AccountDatabase {
             System.out.println("DOB invalid: " + account.holder.getDOB().toString() +  " under 16.");
             return false;
         }
-        if(account.balance <= 0){
-            System.out.println("Initial deposit cannot be 0 or negative.");
-            return false;
-        }
         if((account.printType().equals("(CC)") && account.holder.getDOB().getAge() >= 24)){
             System.out.println("DOB invalid:" + account.holder.getDOB().toString() + " over 24.");
+            return false;
+        }
+        if(account.printType().equals("(MM)") && account.balance < 2000){
+            System.out.println("Minimum of $2000 to open a Money Market account.");
             return false;
         }
         return true;
@@ -138,7 +151,7 @@ public class AccountDatabase {
                 accounts[find(account)] = update;
             }
 
-            System.out.println(account.holder.toString() + account.printType() + "Withdraw - balance updated.");
+            System.out.println(account.holder.toString() + account.printType() + " Withdraw - balance updated.");
             return true;
         }
         System.out.println(account.holder.toString() + account.printType() + "Withdraw - insufficient fund.");
@@ -147,10 +160,10 @@ public class AccountDatabase {
     public void deposit(Account account){
         //need check for if amount entered is not a number in transactionmanager i think
         if(account.balance <= 0){
-            System.out.println("Deposit- amount cannot be 0 or negative.");
+            System.out.println("Deposit - amount cannot be 0 or negative.");
         }else if(account.holder.getDOB().isValid() && isInDatabase(account)){
-            accounts[find(account)].balance -= account.balance;
-            System.out.println(account.holder.toString() + account.printType() + "Deposit - balance updated.");
+            accounts[find(account)].balance += account.balance;
+            System.out.println(account.holder.toString() + account.printType() + " Deposit - balance updated.");
         }
     }
     public void printSorted(){
@@ -163,17 +176,26 @@ public class AccountDatabase {
             Account[] sortedCollege = sortCollege();
             Account[] sortedMoneyMarket = sortMoneyMarket();
             Account[] sortedSavings = sortSavings();
+            int count = 0;
             for(int i = 0; i < sortedChecking.length; i++){
                 System.out.println(sortedChecking[i].toString());
+                accounts[count] = sortedChecking[i];
+                count++;
             }
             for(int i = 0; i < sortedCollege.length; i++){
                 System.out.println(sortedCollege[i].toString());
+                accounts[count] = sortedCollege[i];
+                count++;
             }
             for(int i = 0; i < sortedMoneyMarket.length; i++){
                 System.out.println(sortedMoneyMarket[i].toString());
+                accounts[count] = sortedMoneyMarket[i];
+                count++;
             }
             for(int i = 0; i < sortedSavings.length; i++){
                 System.out.println(sortedSavings[i].toString());
+                accounts[count] = sortedSavings[i];
+                count++;
             }
 
             System.out.println("*end of list.");

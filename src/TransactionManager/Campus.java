@@ -15,4 +15,12 @@ public enum Campus {
     public int getCampusNumber() {
         return campusNumber;
     }
+    public boolean isValid() {
+        for (Campus campus : Campus.values()) {
+            if (campus.campusNumber == this.campusNumber) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
