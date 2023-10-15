@@ -74,7 +74,7 @@ public class Date implements Comparable<Date> { // add comparable method
         int currentYear = today.get(Calendar.YEAR);
 
         int age = currentYear - this.year;
-        if (currentMonth < this.month || (currentMonth == this.month && currentDay < this.day)){
+        if (currentMonth + 1 < this.month || (currentMonth + 1 == this.month && currentDay < this.day)){
             age--;
         }
         return age;

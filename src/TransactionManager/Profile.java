@@ -12,12 +12,22 @@ Profile(String fname, String lname, Date dob){
 
     @Override
     public int compareTo(Profile profile) {
-        if (this.fname.equals(profile.fname) && this.lname.equals(profile.lname)){
-            if (this.dob.equals(profile.dob)) {
+        String thisFName = this.fname.toLowerCase();
+        String thisLName = this.lname.toLowerCase();
+        String profileFName = profile.fname.toLowerCase();
+        String profileLName = profile.lname.toLowerCase();
+        if (thisFName.equals(profileFName) && thisLName.equals(profileLName) && this.dob.equals(profile.dob)){
                 return 0; //if profile equal
-            }
         }
-    return 1;
+        if((thisLName.compareTo(profileLName) > 0) || ((thisLName.compareTo(profileLName)) == 0 &&
+            thisFName.compareTo(profileFName) > 0)){
+            return 1;
+        }
+        if((thisLName.compareTo(profileLName) == 0 && thisFName.compareTo(profileFName) == 0) &&
+            this.dob.compareTo(profile.dob) > 0){
+            return 1;
+        }
+    return -1;
     }
 
     @Override
