@@ -466,7 +466,6 @@ public class AccountDatabase {
      * prints all the accounts with their balances updated based on their interest and fees.
      */
     public void printUpdatedBalances(){
-        updateWithdrawals();
         resortAccounts();
         if (numAcct == 0){
             System.out.println("Account Database is empty!");
