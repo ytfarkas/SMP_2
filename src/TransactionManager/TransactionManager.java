@@ -66,7 +66,7 @@ public class TransactionManager {
                 account.printUpdatedBalances();
                 break;
             default:
-                System.out.println("Invalid Command");
+                System.out.println("Invalid command!");
         }
     }
 

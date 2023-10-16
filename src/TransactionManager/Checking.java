@@ -59,7 +59,7 @@ public class Checking extends Account {
      */
     @Override
     public String toString(){
-        return "Checking::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance);
+        return "Checking::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance);
     }
 
     /**
@@ -68,8 +68,8 @@ public class Checking extends Account {
      */
     @Override
     public String printWithFeesAndInterest(){
-        return "Checking::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::fee $"+
-                String.format("%.2f", this.monthlyFee())  + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
+        return "Checking::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::fee $"+
+                String.format("%,.2f", this.monthlyFee())  + "::monthly interest $" + String.format("%,.2f", this.monthlyInterest());
     }
 
     /**
@@ -80,7 +80,7 @@ public class Checking extends Account {
     public String printUpdatedBalance(){
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
-        return "Checking::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance);
+        return "Checking::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance);
 
     }
 
