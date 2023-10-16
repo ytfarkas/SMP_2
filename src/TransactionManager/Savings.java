@@ -17,6 +17,10 @@ public class Savings extends Account {
         this.balance = depo;
     }
 
+    /**
+     * Calculates the monthly interest rate.
+     * @return the monthly interest
+     */
     @Override
     public double monthlyInterest(){
         if (isLoyal){
@@ -24,6 +28,11 @@ public class Savings extends Account {
         }
         return (balance * .04) / 12;
     }
+    /**
+     * Calculates the monthly fee.
+     *
+     * @return the monthly fee
+     */
     @Override
     public double monthlyFee(){
         if (balance >= 500){
@@ -32,11 +41,19 @@ public class Savings extends Account {
         return 25.0;
     }
 
+    /**
+     * creates a string with the type of account
+     * @return a string containing the type of account abbreviated in parentheses
+     */
     @Override
     public String printType(){
         return "(S)";
     }
 
+    /**
+     * creates a string to print the account
+     * @return the string with the account values
+     */
     @Override
     public String toString(){
         if(isLoyal){
@@ -48,6 +65,10 @@ public class Savings extends Account {
 
     }
 
+    /**
+     * creates a string to print the account with fees and interest
+     * @return the string with the account values
+     */
     @Override
     public String printWithFeesAndInterest(){
         if(isLoyal){
@@ -59,6 +80,10 @@ public class Savings extends Account {
                 + "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
     }
 
+    /**
+     * creates a string to print the account with the updated balances based on the interest and fees.
+     * @return the string with the account values
+     */
     @Override
     public String printUpdatedBalance(){
         balance += this.monthlyInterest();

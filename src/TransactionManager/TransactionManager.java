@@ -3,8 +3,16 @@ package TransactionManager;
 import java.util.Scanner;
 
 public class TransactionManager {
+
+    /**
+     * empty constructor for creating a Transactionmanager Object
+     */
     TransactionManager(){
     }
+
+    /**
+     * Starts the program for reading the commands.
+     */
     public void run(){
         AccountDatabase account = new AccountDatabase();
         Scanner scanner = new Scanner(System.in);
@@ -20,6 +28,12 @@ public class TransactionManager {
         }
     }
 
+    /**
+     * Reads the first command and executes the correct action or prints error.
+     * @param account the account database
+     * @param command the first command
+     * @param input  the rest of the line to be read
+     */
     public void processCommand (AccountDatabase account, String command, String input){
         switch (command){
             case "O":
@@ -55,6 +69,12 @@ public class TransactionManager {
                 System.out.println("Invalid Command");
         }
     }
+
+    /**
+     * takes in the string command and executes the correct open based on the account type.
+     * @param input the input string
+     * @return the account to be opened or null if error occurred
+     */
     public Account openAccount(String input) {
         String[] inputArray = input.trim().split("\\s+");
         try {
@@ -79,7 +99,12 @@ public class TransactionManager {
             return null; // return null?
         }
 
-        public Account openChecking(String input) {
+    /**
+     * Reads the input and creates a checking account.
+     * @param input the input string
+     * @return the account to be opened or null if error occurred
+     */
+    public Account openChecking(String input) {
             try {
                 String[] inputArray = input.trim().split("\\s+");
                 Profile profile = new Profile(inputArray[1], inputArray[2], new Date(inputArray[3]));
@@ -95,6 +120,11 @@ public class TransactionManager {
             return null;
         }
 
+    /**
+     * Reads the input and creates a college checking account.
+     * @param input the input string
+     * @return the account to be opened or null if error occurred
+     */
         public Account openCollegeChecking(String input) {
         try {
             String[] inputArray = input.trim().split("\\s+");
@@ -112,6 +142,11 @@ public class TransactionManager {
         return null;
     }
 
+    /**
+     * Reads the input and creates a Savings account.
+     * @param input the input string
+     * @return the account to be opened or null if error occurred
+     */
     public Account openSavings(String input) {
         try {
             String[] inputArray = input.trim().split("\\s+");
@@ -133,6 +168,11 @@ public class TransactionManager {
         return null;
     }
 
+    /**
+     * Reads the input and creates a MoneyMarket account.
+     * @param input the input string
+     * @return the account to be opened or null if error occurred
+     */
     public Account openMoneyMarket(String input) {
         try {
             String[] inputArray = input.trim().split("\\s+");
@@ -149,8 +189,11 @@ public class TransactionManager {
         return null;
     }
 
-
-
+    /**
+     * Reads the input and creates an account to be closed.
+     * @param input the inout string
+     * @return the account to be closed or null if error occurred
+     */
     public Account closeAccount(String input){
         try {
             String[] inputArray = input.trim().split("\\s+");
@@ -175,6 +218,11 @@ public class TransactionManager {
         return null; //return null?
     }
 
+    /**
+     * Reads the input and creates an account for a deposit.
+     * @param input the input string
+     * @return the account to be deposited or null if error occurred
+     */
     public Account deposit(String input){
        try {
            String[] inputArray = input.trim().split("\\s+");
@@ -198,6 +246,12 @@ public class TransactionManager {
        }
         return null;
     }
+
+    /**
+     * Reads the input and creates an account for a withdraw.
+     * @param input the input string
+     * @return the account for the withdraw or null if error occurred
+     */
     public Account withdraw(String input){
         try {
             String[] inputArray = input.trim().split("\\s+");
