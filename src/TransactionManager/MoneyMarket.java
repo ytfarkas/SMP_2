@@ -1,4 +1,7 @@
+
 package TransactionManager;
+
+import java.text.DecimalFormat;
 
 public class MoneyMarket extends Savings {
     private int withdrawal; //number of withdrawals
@@ -24,9 +27,9 @@ public class MoneyMarket extends Savings {
     @Override
     public double monthlyInterest(){
         if (isLoyal){
-            return (balance * .0475) / 12;
+            return .0475 / 12.0 * balance;
         }
-        return (balance * .045) / 12;
+        return .045 / 12.0 * balance;
     }
 
     /**
@@ -78,13 +81,14 @@ public class MoneyMarket extends Savings {
      */
     @Override
     public String printWithFeesAndInterest(){
+        DecimalFormat decimalFormat = new DecimalFormat("#,###,##0.00");
         if(isLoyal){
             return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance)
                     + "::is loyal" + "::withdrawal: " + withdrawal + "::fee $" + String.format("%,.2f", this.monthlyFee()) + "::monthly interest $"
                     + String.format("%,.2f", this.monthlyInterest());
         }
         return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance)
-                + "::withdrawal: " + withdrawal + "::fee $" + String.format("%,.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%,.2f", this.monthlyInterest());
+                + "::withdrawal: " + withdrawal + "::fee $" + String.format("%,.2f", this.monthlyFee()) + "::monthly interest $" + decimalFormat.format(this.monthlyInterest());
     }
 
     /**
@@ -96,9 +100,9 @@ public class MoneyMarket extends Savings {
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
         if(isLoyal){
-            return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::is loyal::" + "withdrawal: " + withdrawal;
+            return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::is loyal::" + "withdrawal: " + 0;
         }
-        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::withdrawal: " + withdrawal;
+        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::withdrawal: " + 0;
     }
 
     /**
@@ -116,7 +120,7 @@ public class MoneyMarket extends Savings {
      */
     public void resetWithdrawal(){
         this.withdrawal = 0;
-        this.isLoyal = true;
+
     }
 
 
