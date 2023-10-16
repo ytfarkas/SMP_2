@@ -5,7 +5,6 @@ import java.util.Calendar;
 
 /**
  * The Date class is the primary class that stores the inputted date
- * the class contains 10 methods
  * Date(String date){}:
  * This method takes the string input of the date (ex:6/12/2023) and converts it into an int
  * isValid();
@@ -13,8 +12,7 @@ import java.util.Calendar;
  * checkIfDateIsCorrect();
  * This method determines if the date is correct according to it being a leap year
  * checkDate();
- * this method checks if the date is a valid date ensuring it is at least 6 months away
- * it also determines that the inputted date is not a past date
+ * this method checks if the date is a valid date
  * date();
  * contsructor for the year, month, day
  * getYear(), getMonth(), getDay()
@@ -51,7 +49,7 @@ public class Date implements Comparable<Date> { // add comparable method
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return month + "/" + day + "/" + year;
     }
 
@@ -69,16 +67,17 @@ public class Date implements Comparable<Date> { // add comparable method
 
     /**
      * Calculates the age based on the date of birth
-     * @return the person's age in years
+     *
+     * @return age the person's age in years
      */
-    public int getAge(){
+    public int getAge() {
         Calendar today = Calendar.getInstance();
         int currentMonth = today.get(Calendar.MONTH);
         int currentDay = today.get(Calendar.DAY_OF_MONTH);
         int currentYear = today.get(Calendar.YEAR);
 
         int age = currentYear - this.year;
-        if (currentMonth + 1 < this.month || (currentMonth + 1 == this.month && currentDay < this.day)){
+        if (currentMonth + 1 < this.month || (currentMonth + 1 == this.month && currentDay < this.day)) {
             age--;
         }
         return age;
@@ -90,49 +89,49 @@ public class Date implements Comparable<Date> { // add comparable method
      * @return true if date is valid, false if invalid date or leap year
      */
     public boolean checkLeap() {
-            switch (this.month) {
-                case 1:
-                case 3:
-                case 5:
-                case 7:
-                case 8:
-                case 10:
-                case 12:
-                    if (this.day >= 1 && this.day <= 31) {
-                        break;
-                    }
-                    System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
-                    return false;
-                case 4:
-                case 6:
-                case 9:
-                case 11:
-                    if (this.day >= 1 && this.day <= 30) {
-                        break;
-                    }
-                    System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
-                    return false;
-                case 2:
-                    if (this.year % QUADRENNIAL == 0) {
-                        if (this.year % CENTENNIAL == 0) {
-                            if (this.year % QUATERCENTENNIAL == 0) {
-                                if (this.day <= 29 && this.day >= 1) {
-                                }
-                            } else if (this.day <= 28 && this.day >= 1) {
+        switch (this.month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                if (this.day >= 1 && this.day <= 31) {
+                    break;
+                }
+                System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
+                return false;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                if (this.day >= 1 && this.day <= 30) {
+                    break;
+                }
+                System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
+                return false;
+            case 2:
+                if (this.year % QUADRENNIAL == 0) {
+                    if (this.year % CENTENNIAL == 0) {
+                        if (this.year % QUATERCENTENNIAL == 0) {
+                            if (this.day <= 29 && this.day >= 1) {
                             }
-                        } else if (this.day <= 29 && this.day >= 1) {
+                        } else if (this.day <= 28 && this.day >= 1) {
                         }
-                    } else if (this.day <= 28 && this.day >= 1) {
-                    } else {
-                        System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
-                        return false;
+                    } else if (this.day <= 29 && this.day >= 1) {
                     }
-            }
+                } else if (this.day <= 28 && this.day >= 1) {
+                } else {
+                    System.out.println("DOB invalid: " + this.month + "/" + this.day + "/" + this.year + " not a valid calendar date!");
+                    return false;
+                }
+        }
         return true;
     }
 
     /**
-     * Checks if the Date is a valid date that isnt in the past or 6 months away
+     * Checks if the Date is a valid date
      *
      * @param month month
      * @param day   day
@@ -205,7 +204,7 @@ public class Date implements Comparable<Date> { // add comparable method
      * Overide function for equals
      * checks if year, month, and day are equal
      *
-     * @param obj
+     * @param obj date object
      * @return true if equal, otherwise false
      */
     @Override
@@ -249,66 +248,66 @@ public class Date implements Comparable<Date> { // add comparable method
 }
 
 
- //
- //   /**
- //    * Test case main
- //    *
- //    * @param args
- //    */
- //   public static void main(String[] args) {
- //       testDaysInFeb_NonLeap();
- //       testDaysInFeb_Leap();
- //       testCorrectDate();
- //   }
- //
- //  /**
- //   * Test Case #1
- //   * Tests if February is not a leap year
- //   */
- //  private static void testDaysInFeb_NonLeap() {
- //      Date date = new Date(2, 29, 2011);
- //      boolean expectedOutput = false;
- //      boolean actualOutput = date.checkLeap();
- //      System.out.println("**Test case #1: # of days in Feb. in a non-leap year is 28");
- //      testResult(date, expectedOutput, actualOutput);
- //  }
- //
- //  /**
- //   * Test Case 2
- //   * Tests if february is a leap year
- //   */
- //  public static void testDaysInFeb_Leap() {
- //      Date date = new Date(2, 29, 2012);
- //      boolean expectedOutput = true;
- //      boolean actualOutput = date.checkLeap();
- //      System.out.println("**Test case #2: # of days in Feb. in a non-leap year is 29");
- //      testResult(date, expectedOutput, actualOutput);
- //  }
- //
- //  /**
- //   * Test case 3
- //   * Tests is date is correct
- //   */
- //  public static void testCorrectDate() {
- //      Date date = new Date(4, 29, 2023);
- //      boolean expectedOutput = false;
- //      boolean actualOutput = date.checkDate(date.month, date.day, date.year);
- //      System.out.println("**Test case #3: is the date after today");
- //      testResult(date, expectedOutput, actualOutput);
- //  }
- //
- //  /**
- //   * Test result method
- //   *
- //   * @param date           date
- //   * @param expectedOutput Expected output
- //   * @param actualOutput   Actual output
- //   */
- //  public static void testResult(Date date, boolean expectedOutput, boolean actualOutput) {
- //      if (expectedOutput == actualOutput) {
- //          System.out.println("PASS");
- //      } else {
- //          System.out.println("FAIL");
- //      }
- //  }
- //
+//
+//   /**
+//    * Test case main
+//    *
+//    * @param args
+//    */
+//   public static void main(String[] args) {
+//       testDaysInFeb_NonLeap();
+//       testDaysInFeb_Leap();
+//       testCorrectDate();
+//   }
+//
+//  /**
+//   * Test Case #1
+//   * Tests if February is not a leap year
+//   */
+//  private static void testDaysInFeb_NonLeap() {
+//      Date date = new Date(2, 29, 2011);
+//      boolean expectedOutput = false;
+//      boolean actualOutput = date.checkLeap();
+//      System.out.println("**Test case #1: # of days in Feb. in a non-leap year is 28");
+//      testResult(date, expectedOutput, actualOutput);
+//  }
+//
+//  /**
+//   * Test Case 2
+//   * Tests if february is a leap year
+//   */
+//  public static void testDaysInFeb_Leap() {
+//      Date date = new Date(2, 29, 2012);
+//      boolean expectedOutput = true;
+//      boolean actualOutput = date.checkLeap();
+//      System.out.println("**Test case #2: # of days in Feb. in a non-leap year is 29");
+//      testResult(date, expectedOutput, actualOutput);
+//  }
+//
+//  /**
+//   * Test case 3
+//   * Tests is date is correct
+//   */
+//  public static void testCorrectDate() {
+//      Date date = new Date(4, 29, 2023);
+//      boolean expectedOutput = false;
+//      boolean actualOutput = date.checkDate(date.month, date.day, date.year);
+//      System.out.println("**Test case #3: is the date after today");
+//      testResult(date, expectedOutput, actualOutput);
+//  }
+//
+//  /**
+//   * Test result method
+//   *
+//   * @param date           date
+//   * @param expectedOutput Expected output
+//   * @param actualOutput   Actual output
+//   */
+//  public static void testResult(Date date, boolean expectedOutput, boolean actualOutput) {
+//      if (expectedOutput == actualOutput) {
+//          System.out.println("PASS");
+//      } else {
+//          System.out.println("FAIL");
+//      }
+//  }
+//
