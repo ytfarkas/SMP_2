@@ -67,6 +67,10 @@ public class Date implements Comparable<Date> { // add comparable method
         return true;
     }
 
+    /**
+     * Calculates the age based on the date of birth
+     * @return the person's age in years
+     */
     public int getAge(){
         Calendar today = Calendar.getInstance();
         int currentMonth = today.get(Calendar.MONTH);

@@ -1,15 +1,31 @@
 package TransactionManager;
 
+
+/**
+ * The AccountDatabase class contains all the necessary methods for executing the commands that are read from TransactionManager.
+ * 
+ *
+ * @author David Rahabi, Judah Farkas
+ */
 public class AccountDatabase {
     private Account [] accounts; //list of various types of accounts
     private int numAcct; //number of accounts in the array
 
+    /**
+     * Constructor that creates an AccountDatabase object.
+     * Initializes size of accounts to 4 and numAcct to 0
+     */
     public AccountDatabase(){
         this.accounts = new Account[4];
         this.numAcct = 0;
     }
 
 
+    /**
+     * Searches for the account in the accounts array.
+     * @param account The account to be found
+     * @return the index of the account in accounts if found, -1 if not found
+     */
     private int find(Account account) { //search for an account in the array
         for (int i = 0; i < numAcct; i++){
             if (accounts[i].compareTo(account) == 0){
@@ -19,7 +35,10 @@ public class AccountDatabase {
         return -1; //Not found
     }
 
-
+    /**
+     * Increases the size of accounts by 4
+     *
+     */
     private void grow(){ //increase the capacity by 4
        Account[] newAccounts = new Account[numAcct + 4];
         for(int i = 0; i < numAcct; i++){
@@ -28,7 +47,11 @@ public class AccountDatabase {
         accounts = newAccounts;
     }
 
-
+    /**
+     * Searches for the account in the accounts array
+     * @param account the account to be found
+     * @return true if account found, false if not found
+     */
     public boolean contains(Account account){
         for (int i = 0; i < numAcct; i++){
             if (account.compareTo(accounts[i]) == 0){
@@ -38,6 +61,13 @@ public class AccountDatabase {
         return false; //account is not in the array
 
     } //overload if necessary
+
+    /**
+     * Checks if the account holder already has a checking or college checking account.
+     * Used to prevent one person from opening both a checking and college checking account
+     * @param account the account to be checked
+     * @return true if the holder has a checking or college checking account, false if not
+     */
     public boolean hasChecking(Account account){
         for (int i = 0; i < numAcct; i++){
             if (accounts[i].holder.compareTo(account.holder) == 0 && (accounts[i].printType().equals("(CC)") || accounts[i].printType().equals("(C)"))){
@@ -46,6 +76,12 @@ public class AccountDatabase {
         }
         return false; //account is not in the array
     }
+
+    /**
+     * Adds new account to the accounts array if the account is valid.
+     * @param account the account to be opened
+     * @return true if the account is opened successfully, false if not
+     */
     public boolean open(Account account){
         if(validOpen(account)) {
             if (numAcct == accounts.length) {
@@ -60,9 +96,9 @@ public class AccountDatabase {
     } //add a new account
 
     /**
-     * Checks if the open command is valid and prints the correct error if not
+     * Checks if the account to be opened is valid and prints the correct error if not.
      *
-     * @param account
+     * @param account the account to be checked
      * @return true if valid, false if not
      */
     public boolean validOpen(Account account){
@@ -105,6 +141,11 @@ public class AccountDatabase {
         return true;
     }
 
+    /**
+     * Removes the account from the database if inputted account is in the database.
+     * @param account the account to be removed
+     * @return true if the account was successfuly closed, false if not
+     */
     public boolean close(Account account){
         if(account.holder.getDOB().isValid() && isInDatabase(account)){
             Account[] newAccounts = new Account[accounts.length];
@@ -124,6 +165,11 @@ public class AccountDatabase {
         return false;
     } //remove the given account
 
+    /**
+     * Checks if the account exists in the database and prints error if not found.
+     * @param account the account to search
+     * @return true if in the database, false if not
+     */
     public boolean isInDatabase(Account account){
         if(!contains(account)){
             System.out.println(account.holder.toString() + account.printType() + " is not in the database.");
@@ -131,6 +177,12 @@ public class AccountDatabase {
         }
         return true;
     }
+
+    /**
+     * Withdraws money from the account if the amount is valid.
+     * @param account the account to withdraw from
+     * @return true if withdraw completed, false if not
+     */
     public boolean withdraw(Account account){
         //need check for if amount entered is not a number in transactionmanager i think
 
@@ -145,7 +197,7 @@ public class AccountDatabase {
 
         if(isInDatabase(account) && accounts[find(account)].balance > account.balance){
             accounts[find(account)].balance -= account.balance;
-            if(accounts[find(account)].printType().equals("MM")){
+            if(accounts[find(account)].printType().equals("(MM)")){
                 MoneyMarket update = (MoneyMarket) accounts[find(account)];
                 update.updateWithdrawal();
                 accounts[find(account)] = update;
@@ -157,6 +209,11 @@ public class AccountDatabase {
         System.out.println(account.holder.toString() + account.printType() + "Withdraw - insufficient fund.");
         return false;
     } //false if insufficient fund
+
+    /**
+     * Deposits money into the account if the deposit is valid.
+     * @param account the account to add money to
+     */
     public void deposit(Account account){
         //need check for if amount entered is not a number in transactionmanager i think
         if(account.balance <= 0){
@@ -166,6 +223,10 @@ public class AccountDatabase {
             System.out.println(account.holder.toString() + account.printType() + " Deposit - balance updated.");
         }
     }
+
+    /**
+     * Sorts and prints the accounts array by account type, name, and date of birth.
+     */
     public void printSorted(){
         if (numAcct == 0){
             System.out.println("Account Database is empty!");
@@ -202,6 +263,37 @@ public class AccountDatabase {
         }
     } //sort by account type and profile
 
+    /**
+     * resorts the accounts array.
+     */
+    public void resortAccounts(){
+        Account[] sortedChecking = sortChecking();
+        Account[] sortedCollege = sortCollege();
+        Account[] sortedMoneyMarket = sortMoneyMarket();
+        Account[] sortedSavings = sortSavings();
+        int count = 0;
+        for(int i = 0; i < sortedChecking.length; i++){
+            accounts[count] = sortedChecking[i];
+            count++;
+        }
+        for(int i = 0; i < sortedCollege.length; i++){
+            accounts[count] = sortedCollege[i];
+            count++;
+        }
+        for(int i = 0; i < sortedMoneyMarket.length; i++){
+            accounts[count] = sortedMoneyMarket[i];
+            count++;
+        }
+        for(int i = 0; i < sortedSavings.length; i++){
+            accounts[count] = sortedSavings[i];
+            count++;
+        }
+    }
+
+    /**
+     * Finds all the Checking accounts in the database and sorts them.
+     * @return an account array that contains only the sorted checking accounts
+     */
     public Account[] sortChecking(){
         Account[] newAccounts = new Account[numAcct];
         int count = 0;
@@ -229,6 +321,11 @@ public class AccountDatabase {
         return noNullAccounts;
     }
 
+    /**
+     * Finds all the College Checking accounts in the array and sorts them.
+     *
+     * @return an account array containing only the sorted College Checking accounts
+     */
     public Account[] sortCollege(){
         Account[] newAccounts = new Account[numAcct];
         int count = 0;
@@ -256,6 +353,10 @@ public class AccountDatabase {
         return noNullAccounts;
     }
 
+    /**
+     * Finds all the MoneyMarket accounts and sorts them.
+     * @return an account array containing only the sorted MoneyMarket accounts
+     */
     public Account[] sortMoneyMarket(){
         Account[] newAccounts = new Account[numAcct];
         int count = 0;
@@ -282,6 +383,10 @@ public class AccountDatabase {
         return noNullAccounts;
     }
 
+    /**
+     * Finds all the savings accounts and sorts them.
+     * @return an accounts array containing only the sorteed savings accounts
+     */
     public Account[] sortSavings(){
         Account[] newAccounts = new Account[numAcct];
         int count = 0;
@@ -308,7 +413,11 @@ public class AccountDatabase {
         return noNullAccounts;
     }
 
+    /**
+     * Prints all the accounts in the database with their fees and interest charges.
+     */
     public void printFeesAndInterests(){
+        resortAccounts();
         if (numAcct == 0){
             System.out.println("Account Database is empty!");
         }
@@ -320,7 +429,26 @@ public class AccountDatabase {
             System.out.println("*end of list.");
         }
     } //calculate interests/fees
+
+    /**
+     * Runs through the accounts array and resets all the withdraw values for the MoneyMarket accounts to zero.
+     */
+    public void updateWithdrawals(){
+        for(int i = 0; i<numAcct; i++){
+            if(accounts[i].printType().equals("(MM)")){
+                MoneyMarket update = (MoneyMarket) accounts[i];
+                update.resetWithdrawal();
+                accounts[i] = update;
+            }
+        }
+    }
+
+    /**
+     * prints all the accounts with their balances updated based on their interest and fees.
+     */
     public void printUpdatedBalances(){
+        updateWithdrawals();
+        resortAccounts();
         if (numAcct == 0){
             System.out.println("Account Database is empty!");
         }
