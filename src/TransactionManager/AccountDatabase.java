@@ -131,7 +131,7 @@ public class AccountDatabase {
             return false;
         }
         if((account.printType().equals("(CC)") && account.holder.getDOB().getAge() >= 24)){
-            System.out.println("DOB invalid:" + account.holder.getDOB().toString() + " over 24.");
+            System.out.println("DOB invalid: " + account.holder.getDOB().toString() + " over 24.");
             return false;
         }
         if(account.printType().equals("(MM)") && account.balance < 2000){
@@ -195,31 +195,50 @@ public class AccountDatabase {
             return false;
         }
 
-        if(isInDatabase(account) && accounts[find(account)].balance > account.balance){
-            accounts[find(account)].balance -= account.balance;
-            if(accounts[find(account)].printType().equals("(MM)")){
-                MoneyMarket update = (MoneyMarket) accounts[find(account)];
-                update.updateWithdrawal();
-                accounts[find(account)] = update;
+        if(isInDatabase(account)) {
+            if (accounts[find(account)].balance > account.balance){
+                    accounts[find(account)].balance -= account.balance;
+                if (accounts[find(account)].printType().equals("(MM)")) {
+                    updateWithdrawalsAndLoyalty(account);
+                }
+                System.out.println(account.holder.toString() + account.printType() + " Withdraw - balance updated.");
+                return true;
             }
-
-            System.out.println(account.holder.toString() + account.printType() + " Withdraw - balance updated.");
-            return true;
+            System.out.println(account.holder.toString() + account.printType() + " Withdraw - insufficient fund.");
+            return false;
         }
-        System.out.println(account.holder.toString() + account.printType() + "Withdraw - insufficient fund.");
         return false;
     } //false if insufficient fund
 
+    //for withdrawals of MM
+    public void updateWithdrawalsAndLoyalty(Account account){
+            MoneyMarket update = (MoneyMarket) accounts[find(account)];
+            update.updateWithdrawal();
+            update.updateLoyalty();
+            accounts[find(account)] = update;
+
+    }
+
+    //for deposits of MM
+    public void updateLoyalty(Account account){
+            MoneyMarket update = (MoneyMarket) accounts[find(account)];
+            update.updateLoyalty();
+            accounts[find(account)] = update;
+    }
     /**
      * Deposits money into the account if the deposit is valid.
      * @param account the account to add money to
      */
+
     public void deposit(Account account){
         //need check for if amount entered is not a number in transactionmanager i think
         if(account.balance <= 0){
             System.out.println("Deposit - amount cannot be 0 or negative.");
         }else if(account.holder.getDOB().isValid() && isInDatabase(account)){
             accounts[find(account)].balance += account.balance;
+            if(accounts[find(account)].printType().equals("(MM)")){
+                updateLoyalty(account);
+            }
             System.out.println(account.holder.toString() + account.printType() + " Deposit - balance updated.");
         }
     }
@@ -453,7 +472,7 @@ public class AccountDatabase {
             System.out.println("Account Database is empty!");
         }
         else{
-            System.out.println("*list of accounts with fees and interests applied");
+            System.out.println("*list of accounts with fees and interests applied.");
             for(int i=0; i < numAcct; i++){
                 System.out.println(accounts[i].printUpdatedBalance());
             }

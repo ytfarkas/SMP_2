@@ -58,10 +58,10 @@ public class Savings extends Account {
     public String toString(){
         if(isLoyal){
             return "Savings::" + this.holder.toString() + "::Balance $"
-                    + String.format("%.2f", this.balance) + "::is loyal";
+                    + String.format("%,.2f", this.balance) + "::is loyal";
         }
         return "Savings::" + this.holder.toString() + "::Balance $"
-                + String.format("%.2f", this.balance);
+                + String.format("%,.2f", this.balance);
 
     }
 
@@ -72,12 +72,12 @@ public class Savings extends Account {
     @Override
     public String printWithFeesAndInterest(){
         if(isLoyal){
-            return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance)
-                    + "::is loyal" +  "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $"
-                    + String.format("%.2f", this.monthlyInterest());
+            return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance)
+                    + "::is loyal" +  "::fee $" + String.format("%,.2f", this.monthlyFee()) + "::monthly interest $"
+                    + String.format("%,.2f", this.monthlyInterest());
         }
-        return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance)
-                + "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
+        return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance)
+                + "::fee $" + String.format("%,.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%,.2f", this.monthlyInterest());
     }
 
     /**
@@ -89,8 +89,17 @@ public class Savings extends Account {
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
         if(isLoyal){
-            return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::is loyal";
+            return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::is loyal";
         }
-        return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance);
+        return "Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance);
+    }
+
+    public void updateLoyalty(){
+        if(this.balance >= 2000){
+            this.isLoyal = true;
+        }
+        else{
+            this.isLoyal = false;
+        }
     }
 }

@@ -62,7 +62,7 @@ package TransactionManager;
          */
         @Override
         public String toString(){
-            return "College Checking::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::" + this.campus;
+            return "College Checking::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::" + this.campus;
         }
 
         /**
@@ -71,8 +71,8 @@ package TransactionManager;
          */
         @Override
         public String printWithFeesAndInterest(){
-            return "College Checking::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::" + this.campus + "::fee $"+
-                    String.format("%.2f", this.monthlyFee())  + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
+            return "College Checking::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::" + this.campus + "::fee $"+
+                    String.format("%,.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%,.2f", this.monthlyInterest());
         }
 
 
@@ -84,7 +84,7 @@ package TransactionManager;
         public String printUpdatedBalance(){
             balance += this.monthlyInterest();
             balance -= this.monthlyFee();
-            return "College Checking::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::" + this.campus;
+            return "College Checking::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::" + this.campus;
         }
 
 

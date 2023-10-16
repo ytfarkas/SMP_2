@@ -37,6 +37,9 @@ public class MoneyMarket extends Savings {
     @Override
     public double monthlyFee(){
         if (balance >= 2000){
+            if(withdrawal > 3){
+                return 10.0;
+            }
             return 0.0;
         }
         if(withdrawal > 3){
@@ -62,10 +65,10 @@ public class MoneyMarket extends Savings {
     public String toString(){
         if(isLoyal){
             return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $"
-                    + String.format("%.2f", this.balance) + "::is loyal::" + "withdrawal: " + withdrawal;
+                    + String.format("%,.2f", this.balance) + "::is loyal::" + "withdrawal: " + withdrawal;
         }
         return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $"
-                + String.format("%.2f", this.balance) + "::withdrawal: " + withdrawal;
+                + String.format("%,.2f", this.balance) + "::withdrawal: " + withdrawal;
 
     }
 
@@ -76,12 +79,12 @@ public class MoneyMarket extends Savings {
     @Override
     public String printWithFeesAndInterest(){
         if(isLoyal){
-            return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance)
-                    + "::is loyal" + "::withdrawal: " + withdrawal + "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $"
-                    + String.format("%.2f", this.monthlyInterest());
+            return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance)
+                    + "::is loyal" + "::withdrawal: " + withdrawal + "::fee $" + String.format("%,.2f", this.monthlyFee()) + "::monthly interest $"
+                    + String.format("%,.2f", this.monthlyInterest());
         }
-        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance)
-                + "::withdrawal: " + withdrawal + "::fee $" + String.format("%.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%.2f", this.monthlyInterest());
+        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance)
+                + "::withdrawal: " + withdrawal + "::fee $" + String.format("%,.2f", this.monthlyFee()) + "::monthly interest $" + String.format("%,.2f", this.monthlyInterest());
     }
 
     /**
@@ -93,9 +96,9 @@ public class MoneyMarket extends Savings {
         balance += this.monthlyInterest();
         balance -= this.monthlyFee();
         if(isLoyal){
-            return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::is loyal::" + "withdrawal: " + withdrawal;
+            return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::is loyal::" + "withdrawal: " + withdrawal;
         }
-        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%.2f", this.balance) + "::withdrawal: " + withdrawal;
+        return "Money Market" + "::Savings::" + this.holder.toString() + "::Balance $" + String.format("%,.2f", this.balance) + "::withdrawal: " + withdrawal;
     }
 
     /**
@@ -113,6 +116,18 @@ public class MoneyMarket extends Savings {
      */
     public void resetWithdrawal(){
         this.withdrawal = 0;
+        this.isLoyal = true;
+    }
+
+
+
+    public void updateLoyalty(){
+        if(this.balance >= 2000){
+            this.isLoyal = true;
+        }
+        else{
+            this.isLoyal = false;
+        }
     }
 
 }
