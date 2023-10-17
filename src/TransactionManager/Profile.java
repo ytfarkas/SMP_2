@@ -71,21 +71,4 @@ public class Profile implements Comparable<Profile> {
         return dob;
     }
 
-    /**
-     * Getter method for first name
-     *
-     * @return fname first name
-     */
-    public String getFname() {
-        return fname;
-    }
-
-    /**
-     * Getter method for last name
-     *
-     * @return lname Last name
-     */
-    public String getLname() {
-        return lname;
-    }
 }

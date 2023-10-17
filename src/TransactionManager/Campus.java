@@ -24,15 +24,6 @@ public enum Campus {
 
     }
 
-    /**
-     * Getter Method for campus number
-     *
-     * @return campusNumber
-     */
-    public int getCampusNumber() {
-        return campusNumber;
-    }
-
 
     /**
      * isValid checks is campus number is a valid campus number

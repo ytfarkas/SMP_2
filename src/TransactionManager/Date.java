@@ -32,6 +32,20 @@ public class Date implements Comparable<Date> { // add comparable method
     public static final int CENTENNIAL = 100;
     public static final int QUATERCENTENNIAL = 400;
 
+
+    /**
+     * Constructor for the date class
+     *
+     * @param month month
+     * @param day   day
+     * @param year  year
+     */
+    Date(int month, int day, int year) {
+        this.year = year;
+        this.month = month;
+        this.day = day;
+    }
+
     /**
      * Constructor that splits the given date from string into ints
      * input: 6/12/23
@@ -157,48 +171,6 @@ public class Date implements Comparable<Date> { // add comparable method
         return true;
     }
 
-    /**
-     * Constructor for the date class
-     *
-     * @param month month
-     * @param day   day
-     * @param year  year
-     */
-    Date(int month, int day, int year) {
-        this.year = year;
-        this.month = month;
-        this.day = day;
-    }
-
-    /**
-     * Getter method for the year
-     *
-     * @return year
-     */
-    public int getYear() {
-
-        return year;
-    }
-
-    /**
-     * Getter method for month
-     *
-     * @return month
-     */
-    public int getMonth() {
-
-        return month;
-    }
-
-    /**
-     * Getter method for day
-     *
-     * @return day
-     */
-    public int getDay() {
-
-        return day;
-    }
 
     /**
      * Overide function for equals
