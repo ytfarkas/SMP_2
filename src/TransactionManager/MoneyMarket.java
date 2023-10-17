@@ -18,19 +18,6 @@ public class MoneyMarket extends Savings {
     /**
      * Constructor for MoneyMarket
      *
-     * @param profile    Profile
-     * @param balance    balance
-     * @param loyalty    isLoyal
-     * @param withdrawal Withdraw ammount
-     */
-    public MoneyMarket(Profile profile, double balance, boolean loyalty, int withdrawal) {
-        super(profile, balance, loyalty); //super explanation in collegeChecking
-        this.withdrawal = withdrawal;
-    }
-
-    /**
-     * Constructor for MoneyMarket
-     *
      * @param profile Profile
      */
     public MoneyMarket(Profile profile) {

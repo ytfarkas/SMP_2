@@ -460,18 +460,6 @@ public class AccountDatabase {
         }
     } //calculate interests/fees
 
-    /**
-     * Runs through the accounts array and resets all the withdraw values for the MoneyMarket accounts to zero.
-     */
-    public void updateWithdrawals() {
-        for (int i = 0; i < numAcct; i++) {
-            if (accounts[i].printType().equals("(MM)")) {
-                MoneyMarket update = (MoneyMarket) accounts[i];
-                update.resetWithdrawal();
-                accounts[i] = update;
-            }
-        }
-    }
 
     /**
      * prints all the accounts with their balances updated based on their interest and fees.
